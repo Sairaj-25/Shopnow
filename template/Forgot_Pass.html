@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <title>Forgot Password</title>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row">
+
+        <!-- Image Section -->
+        <div class="col-md-6">
+            <img 
+                class="img-fluid w-100 h-100"
+                src="media/images/rb_2147495474.png"
+                style="object-fit: cover;"
+                alt="ShopNow Image">
+        </div>
+
+        <!-- Forgot Password Form -->
+        <div class="col-md-3 mt-3 ms-5 h-75 shadow">
+
+            <h4 class="text-center mt-3 mb-3">Forgot Password</h4>
+
+            {% if errormsg %}
+                <div class="alert alert-danger">
+                    {{ errormsg }}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <input 
+                        type="email"
+                        class="form-control"
+                        name="uname"
+                        placeholder="name@example.com"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <input 
+                        type="password"
+                        class="form-control"
+                        name="upass"
+                        placeholder="New password"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <input 
+                        type="password"
+                        class="form-control"
+                        name="upass2"
+                        placeholder="Confirm password"
+                        required>
+                </div>
+
+                <div class="mb-3 d-flex justify-content-center">
+                    <input 
+                        type="submit"
+                        class="btn btn-success"
+                        value="Reset Password">
+                </div>
+                <hr>
+                <div class="text-center mb-3">
+                    Back to login?
+                    <a href="/login" style="text-decoration: none;">Login</a>
+                </div>
+
+                {% if success %}
+                    <script>
+                        alert("{{ success }}");
+                    </script>
+                {% endif %}
+            </form>
+
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

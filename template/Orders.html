@@ -1,0 +1,61 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block 'main' %}
+
+<div class="row mt-3 mb-3 d-flex justify-content-center">
+    <div class="d-flex justify-content-around mb-md-2">
+        <h4>Bill Details</h4>
+        <div>
+            <button class="btn btn-sm btn-danger" onclick="window.location.href='/'">x</button>
+        </div>
+    </div>
+    <div class="col-lg-7 col-md-7 col-sm-12 px-4 rounded">
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-box mb-4 p-3 border rounded">
+                    <div class="d-flex justify-content-between">
+                        <p>{{ order.created_at }}</p>
+                        <p>Status: <strong>{{ order.status }}</strong></p>    
+                    </div>
+                        <p>Order ID: {{ order.order_id }}</p>
+                    
+                    <ul>
+                        {% for item in order.items.all %}
+                            <li class="d-flex justify-content-between align-items-center">
+                                <span>
+                                    {{ item.product.name|upper }}
+                                    (<i class="bi bi-currency-rupee"></i> {{ item.product.price }} x {{ item.quantity }})
+                                </span>
+                                <span>
+                                    <i class="bi bi-currency-rupee"></i> {{ item.get_total_price }}
+                                </span>
+                                
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="d-flex justify-content-between">
+                        <p>Delivery Charges <i class="bi bi-info-circle"></i></p>
+                        {% if order.amount > 209 %}
+                            <p>free</p>
+                        {% else %}   
+                            <p>₹ 25</p>
+                        {% endif %}
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p>Handling Charges <i class="bi bi-info-circle"></i></p>
+                        <p>₹ 10</p>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <p><strong>Paid Amount</strong></p>
+                        <p><strong><i class="bi bi-currency-rupee"></i> {{ order.amount }}</strong></p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-center">You have no recent orders.</p>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock 'main' %}

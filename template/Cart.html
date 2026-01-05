@@ -1,0 +1,110 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block 'main' %}
+
+
+<div class="container mt-md-2 mb-md-1 bg-light">   
+
+    <!-- Main Content -->
+    <div class="row">
+        <!-- Cart Items Section  -->
+        <div class="col-lg-9 col-md-8 col-sm-12 rounded order-last order-md-first">
+            <div class="d-flex gap-5 align-items-center mb-2 mb-md-0 p-sm-4 p-md-3">
+                <h4 class="d-none d-md-block m-0 me-md-5">My Cart 
+                    <i class="bi bi-cart-check" style="font-size: 1.5rem;"></i>
+                </h4>
+                <p class="m-0 text-center ms-md-5 p-1">
+                    Items in Cart (<b id="cart-count">{{ total_quantity }}</b>)
+                </p>
+                <a href="/" class="bg-info text-white rounded ps-2 pe-2 pt-1 pb-1 ms-auto" style="text-decoration: none; font-size: 0.8rem;">
+                    + add items
+                </a>
+            </div>
+
+            {% if cart_items %}
+            <!-- d-none hide and d-md-flex displays content only on medium-large screns -->
+            <div id="cart-title" class="d-none d-md-flex justify-content-center align-items-center text-secondary fw-bold p-2">
+                <div style="min-width: 28%;">Product</div>
+                <div class="text-center ms-md-4" style="min-width: 25%;">Quantity</div>
+                <div class="text-end" style="min-width: 15%;">Price</div>
+            </div>
+            {% endif %}
+    
+            {% for item in cart_items %}
+            
+            <div  id="cart-item-{{ item.product.id }}" class="mb-3 shadow rounded d-flex justify-content-between align-items-center p-1">
+                <div class="d-flex justify-content-start gap-3 align-items-center" style="min-width: 53%;">
+                    <div>
+                        <a href="{% url 'product_info' pid=item.product.id %}">
+                            <img src="{{ item.product.image.url }}" class="img-fluid rounded" style="height: 3rem; width: 5rem; object-fit: cover;" alt="Image">
+                        </a>
+                    </div>
+                    <div class="d-flex flex-column justify-content-start">
+                        <p class="mb-0">{{ item.product.name }} | <span class="text-primary">{{ item.quantity }}</span> {{ item.product.unit }}</p>
+                    </div>
+                </div>
+    
+                <div class="d-flex">    
+                    <form method="POST" action="{% url 'update_quantity' item.product.id 'decrement' %}" style="display: inline;" onsubmit="storeScrollPosition()">
+                        {% csrf_token %}
+                        <button class="btn btn-secondary btn-sm" type="submit"><b>-</b></button>
+                    </form>
+                    <input type="text" class="form-control form-control-sm text-center text-primary w-25" value="{{ item.quantity }}" min="1" max="9" readonly>
+                    <form method="POST" action="{% url 'update_quantity' item.product.id 'increment' %}" style="display: inline;" onsubmit="storeScrollPosition()">
+                        {% csrf_token %}
+                        <button class="btn btn-secondary btn-sm" type="submit"><b>+</b></button>
+                    </form>
+                </div> 
+    
+                <div class="d-flex justify-content-between align-items-center text-end" style="min-width: 20%;">
+                    <p class="m-0"><i class="bi bi-currency-rupee" style="font-size: 0.8rem;"></i>{{ item.get_total_price }}</p>
+                    {% csrf_token %}
+                    <button class="btn btn-link text-danger" onclick="removeFromCart({{ item.product.id }})">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">Your cart is empty. <a href="/">Start Shopping</a></p>
+            {% endfor %}
+        </div>
+        
+        <!-- Order Details Section-->
+        {% if cart_items %}
+        <div id="order-details" class="col-lg-3 col-md-4 col-sm-12 mb-3 mb-md-0 shadow p-md-2 rounded order-first order-md-last order-details">
+            <h5 class="text-center">Order Details</h5>
+            <div class="d-flex justify-content-between">
+                <p>Items Total</p>
+                <p><i class="bi bi-currency-rupee" style="font-size: 0.8rem;"></i><span id="total-amount">{{ Total }}</span></p>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p>delivery charges <a href="#"><b><i class="bi bi-info-circle" style="font-size: 0.9rem;"></i></b></a></p>
+                {% if Total > 199 %}
+                    <p><span id="delivery-charges">free</span></p>
+                {% else %}
+                    <p><span id="delivery-charges"><i class="bi bi-currency-rupee" style="font-size: 0.8rem;"></i>{{ delivery_charges }}</span></p>
+                {% endif %}
+            </div>
+            <div class="d-flex justify-content-between">
+                <p>handling charges <a href="#"><b><i class="bi bi-info-circle" style="font-size: 0.9rem;"></i></b></a></p>
+                <p><i class="bi bi-currency-rupee" style="font-size: 0.8rem;"></i>{{ handling_charges }}</p>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between fw-bold">
+                <p>Grand Total: </p>
+                <p><i class="bi bi-currency-rupee"></i> <span id="grand-total">{{ GrandTotal }}</span></p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <a href="{% url 'place_order' %}" class="btn btn-success w-50 mb-md-1">Place Order</a>
+            </div>
+        </div>
+        {% endif %}
+    
+        
+    </div>
+    
+</div>
+    
+<script src="{% static 'js/app.js' %}"></script>
+{% endblock 'main' %}

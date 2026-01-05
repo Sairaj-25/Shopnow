@@ -1,0 +1,117 @@
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: auto !important;
+}
+
+/* Change background and text color when a dropdown item is clicked */
+.dropdown-menu .dropdown-item:active {
+    background-color: gray; /* Light gray background */
+}
+
+.anchor{
+    text-decoration:none;
+    color: azure;
+}
+
+.anchor:hover {
+    color: aqua !important;
+}
+
+.social{
+    color: azure;
+}
+
+.social:hover {
+    color: aqua;
+}
+
+.card-img-top{
+    aspect-ratio: 3/2;
+    width: 50%;
+    max-height: 200px; /* Adjust this value to your desired maximum height */
+    object-fit: cover;
+} 
+
+.card{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em; /* Adjust this value to your desired spacing */
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden; /* Prevent content from overflowing */
+    position: relative;
+}
+
+.card:hover {
+    transform: scale(1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    display: block; 
+    overflow: hidden; 
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+}
+
+/* Hover effect on navbar links */
+.navbar-nav .nav-link:hover {
+    color:aqua !important;
+}
+
+
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 992px) {
+    .navbar-brand strong {
+        font-size: 1.4rem !important;
+    }
+    
+.navbar-nav .nav-item {
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+.card-img-top {
+        width: 100% !important;
+        max-height: 250px;
+    }
+    
+.navbar-collapse {
+        padding: 1rem 0;
+    }
+    
+.nav-link i {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Larger Screens */
+@media (min-width: 992px) {
+    .search-form-container {
+        flex: 0 1 600px;
+    }
+}
+
+/* Cart.html  */
+/* order-details */
+
+@media (max-width: 600px) { /* Small screens */
+    .order-details {
+        width: 100% !important; /* Full width */
+        height: fit-content !important; /* Auto height */
+        max-height: fit-content; /* Adjust height dynamically */
+        background-color: white;
+        padding: 10px;
+    }
+}
+
+@media (min-width: 768px) { /* Medium & large screens */
+    .order-details {
+
+        height: fit-content !important; /* Adjust height dynamically */
+        max-height: fit-content;
+    }
+}

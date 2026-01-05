@@ -1,0 +1,73 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="row mt-3 mb-3 d-flex justify-content-center">
+<div class="col-lg-3 col-md-4 col-sm-12 px-4 shadow rounded">
+    <h5 class="text-center mt-3">Order Summary</h5>
+    {% for item in cart_items %}
+        <div class="d-flex justify-content-between">
+            <p>{{ item.product.name|title }} x {{ item.quantity }}</p>
+            <p><i class="bi bi-currency-rupee"></i> {{ item.get_total_price }}</p>
+        </div>
+    {% endfor %}
+    
+    <div class="d-flex justify-content-between">
+        <p>Delivery Charges <i class="bi bi-info-circle"></i></p>
+        {% if total > 199 %}
+            <p><span id="delivery-charges">free</span></p>
+        {% else %}
+            <p><span id="delivery-charges"><i class="bi bi-currency-rupee" style="font-size: 0.8rem;"></i>{{ delivery_charges }}</span></p>
+        {% endif %}
+    </div>
+    
+    <div class="d-flex justify-content-between">
+        <p>Handling Charges <i class="bi bi-info-circle"></i></p>
+        <p>₹{{ handling_charges }}</p>
+    </div>
+
+    <hr>
+    <div class="d-flex justify-content-between">
+        <p><strong>Total Price</strong></p>
+        <p><strong><i class="bi bi-currency-rupee"></i> {{ grand_total }}</strong></p>
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="d-flex justify-content-center mb-3">
+            <button id="rzp-button1" type="button" class="btn btn-success">Proceed to Payment</button>
+        </div>
+    </form>
+</div>
+</div>
+{% endblock %}
+
+{% block payment-gateway %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    document.getElementById('rzp-button1').onclick = function(e) {
+        e.preventDefault();
+
+        var order_id = "{{ order_id }}";
+        if (!order_id || order_id === "None") {
+            alert("Error: Order ID is missing. Please try again.");
+        return;
+        }
+
+        var options = {
+            key: "{{ razorpay_key }}",
+            amount: parseInt("{{ razoramount }}"),
+            currency: "INR",
+            name: "ShopNow",
+            description: "Order Payment",
+            order_id: order_id,
+            callback_url: "{{ callback_url }}",
+            theme: { "color": "#3399cc" }
+        };
+
+        var rzp1 = new Razorpay(options);
+
+        rzp1.open();
+    };
+</script>
+{% endblock %}

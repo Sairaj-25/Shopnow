@@ -1,0 +1,78 @@
+{% extends 'Base.html' %}
+
+{% block 'main' %}
+    <style>
+        .sidebar {
+            height: fit-content;
+            background-color: #f8f9fa;
+            padding-top: 1rem;
+        }
+        .sidebar a {
+            display: block;
+            padding: 0.5rem;
+            text-decoration: none;
+            color: #333;
+        }
+        .sidebar a:hover {
+            background-color: cadetblue;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            
+            <nav class="col-md-3 col-lg-2 sidebar mt-md-5 mb-md-3">
+            
+                <a href="orders">My Orders</a>
+                <a href="cart/">My Cart</a>
+                <a href="/address/">Address</a>
+                <a href="about">About Us</a>
+                <a href="contact">Connect Us</a>
+                <a href="/help/">Help</a>
+                <a href="/policy/">Policy</a>
+                <a href="/feedback/">Feedback</a>
+                <a href="logout">Logout</a>
+            </nav>
+            <main class="col-md-9 col-lg-10 p-4 order-first order-md-last">
+            {% if customer %}
+                <div class="d-flex justify-content-between">
+                    <h4 class="text-center">Welcome, {{ customer.name }}</h4>
+                    <div>
+                        <button class="btn btn-sm btn-danger" onclick="window.history.back()">x</button>
+                    </div>
+                </div>
+                <div class="row">
+                <section class="col-md-9 col-lg-10 p-4">
+                    <h5>Profile Information</h5>
+                    <p><strong>Email:</strong> {{ customer.email }}</p>
+                    <p><strong>Phone Number:</strong> {{ customer.phone }}</p>
+                    <p><strong>Address:</strong> {{ customer.address }}, {{ customer.landmark }}, {{ customer.city }}, {{ customer.state }} - {{ customer.pin_code }}</p>
+                    <h5>Account Settings</h5>
+                    <p>Update your email, password, and other preferences to keep your account secure and up to date.</p>
+                </section>
+                </div>
+            {% else %}
+                <div class="d-flex justify-content-between">
+                    <h4 class="text-center">Welcome, {{ user }}</h4>
+                    <div>
+                        <button class="btn btn-sm btn-danger" onclick="window.history.back()">x</button>
+                    </div> 
+                </div>
+                <div class="row">
+                <section class="col-md-9 col-lg-10 p-4">
+                    <h5>Profile Information</h5>
+                    <p>This is your profile page where you can view and update your personal details, track orders, and manage account settings.</p>
+                    <h5>Recent Orders</h5>
+                    <p>Check the status of your latest purchases and reorder your favorite items with ease.</p>
+                    <h5>Account Settings</h5>
+                    <p>Update your email, password, and other preferences to keep your account secure and up to date.</p>
+                </section>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+{% endblock %}

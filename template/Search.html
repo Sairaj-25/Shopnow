@@ -1,0 +1,52 @@
+{% extends 'Base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="title p-2 ms-2">
+            <h3>search results for "{{ query }}"</h3>
+        </div>
+    </div>
+
+<!-- Product Cards -->
+<div class="row g-3">
+    {% for product in products %}
+    <div class="col-4 col-sm-3 col-md-2">
+        <div class="card" style="width: 100%;">
+            <a href="{% url 'product_info' pid=product.id %}">
+                <img src="{{ product.image.url }}" style="object-fit: cover;" class="card-img-top" alt="">
+            </a>
+            <div class="m-1 card-body p-0">
+                <a href="{% url 'product_info' pid=product.id %}" style="text-decoration: none;">
+                    <p class="card-title text-dark" 
+                    style="display: block; height: 1rem; overflow: hidden; font-size: 0.85rem;font-weight: 500; text-overflow: ellipsis; white-space: nowrap; ">
+                    {{ product.name|upper }}
+                    </p>
+                </a>
+                <diV class="ms-md-2">
+                    <p style="font-size: 0.75rem;">{{ product.no_of_units }} {{ product.unit }} &nbsp;| <i class="bi bi-currency-rupee" style="font-size: 0.6rem;"></i>{{ product.price }}</p>
+                </diV>
+        <!-- Add Button -->
+                
+                <div class="product-container">
+                    {% csrf_token %}
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-light btn-sm border-success add-to-cart w-75" data-id="{{ product.id }}">Add</button>
+                    </div>
+                    
+                    <!-- Cart Item Container -->
+                    <div class="cart-item-container px-lg-4"></div> <!-- Quantity controls will be added here -->
+                </div>
+                           
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+</div>
+
+
+
+{% endblock 'main' %}

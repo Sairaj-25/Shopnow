@@ -1,0 +1,119 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% load custom_tags %}
+
+{% block 'main' %}
+
+    <!-- Carousel -->
+    <div class="container-fluid mt-md-3 mb-md-3">
+        <div id="autoCarousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Indicators -->
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#autoCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="slide 1"></button>
+                <button type="button" data-bs-target="#autoCarousel" data-bs-slide-to="1" aria-label="slide 2"></button>
+                <button type="button" data-bs-target="#autoCarousel" data-bs-slide-to="2" aria-label="slide 3"></button>
+            </div>
+
+
+            <!-- Carousel Items -->
+             <div class="carousel-inner">
+                <!-- slide 1 -->
+                <div class="carousel-item active" data-bs-interval="3000">
+                    <a href="#">
+                        <img src="media\images\carousel 1.jpeg" class="d-block w-100" style="height: 50vh; object-fit: cover;" alt="">
+                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>Fruits</h5>
+                        <p>Description for the first slide.</p>
+                    </div>
+                </div>
+
+                <!-- slide 2 -->
+                <div class="carousel-item" data-bs-interval="3000">
+                    <a href="">
+                        <img src="media\images\carousel 2.jpeg" class="d-block w-100" style="height: 50vh; object-fit: cover;" alt="">                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p>Description for the first slide.</p>
+                    </div>
+                </div>
+
+                <!-- slide 3 -->
+                <div class="carousel-item" data-bs-interval="3000">
+                    <a href="">
+                        <img src="media\images\carousel 3.jpeg" class="d-block w-100" style="height: 50vh; object-fit: cover;" alt="">                    </a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5></h5>
+                        <p>Description for the first slide.</p>
+                    </div>
+                </div>
+
+             </div>
+
+             <!-- Arrow controls-->
+              <button class="carousel-control-prev" type="button" data-bs-target="#autoCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#autoCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              </button>
+
+        </div>
+    </div>  <!-- Carousel ends -->
+
+
+
+
+<!-- Products Section -->
+<div class="container">
+    {% for category, product_list in products.items %}
+    <!-- Category Section -->
+        <div class="mb-md-2 d-flex justify-content-start gap-5 align-items-center rounded p-1">
+            <h2>{{ category|title }}</h2>
+            <a href="{% url 'all_products' id=category.id %}" class="text-decoration-none bg bg-light ps-1 pe-1 me-3 mt-2 border border-primary rounded" style="font-size: 0.8rem;">see all</a>
+        </div>
+
+    <!-- Product Cards -->
+    <div class="row g-3">
+        {% for product in product_list %}
+        <div class="col-4 col-sm-3 col-md-2 {% if forloop.counter > 6 %}d-none{% endif %}">
+            <div class="card" style="width: 100%;">
+                <a href="{% url 'product_info' pid=product.id %}">
+                    <img src="{{ product.image.url }}" style="object-fit: cover;" class="card-img-top" alt="" width="100%" height="100%">
+                </a>
+                <div class="card-body">
+                    <a href="{% url 'product_info' pid=product.id %}" style="text-decoration: none;">
+                        <p class="card-title text-dark" 
+                        style="display: block; height: 1rem; overflow: hidden; font-size: 0.85rem;font-weight: 500; text-overflow: ellipsis; white-space: nowrap; ">
+                        {{ product.name|upper }}
+                        </p>
+                    </a>
+                    <p style="font-size: 0.8rem;">1 {{ product.unit }} &nbsp;| <i class="bi bi-currency-rupee" style="font-size: 0.8rem;"></i><b> {{ product.price }}</b></p>
+
+                    <div>
+                        <input type="button" value="Add" onclick="addToCart">
+                    </div>
+
+                
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+    <div class="row">
+        <h4 class="">Recommended Items</h4>
+    </div>
+    <div class="row">
+        <h4 class="">Recently Viewed</h4>
+    </div>
+</div>
+
+<script src="{% static 'js/app.js' %}">
+
+
+</script>
+
+
+{% endblock 'main' %}

@@ -1,0 +1,65 @@
+{% extends 'Base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="container mt-md-2 mb-md-1 bg-light">
+    <div class="row d-flex justify-content-center shadow">
+        <div class="col-lg-9 col-md-8 col-sm-12">
+            <h5>Customer Details</h5>
+            <form method="POST" id="customer-form" novalidate>
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                {% for error in errors %}
+                                    <li>{{ field|title }}: {{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Full Name</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Phone Number</label>
+                        {{ form.phone }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Street Address</label>
+                        {{ form.address }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Landmark (Optional)</label>
+                        {{ form.landmark }}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-3">
+                        <label class="form-label">City</label>
+                        {{ form.city }}
+                    </div>
+                    <div class="col-5">
+                        <label class="form-label">State</label>
+                        {{ form.state }}
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">Pin Code</label>
+                        {{ form.pin_code }}
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center mb-3">
+                    <a href="{% url 'make_payment' %}" class="btn btn-success w-50 mb-md-1">Make Payment</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
