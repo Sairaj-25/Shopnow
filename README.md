@@ -96,7 +96,7 @@ E-Kart/
 ### 1️⃣ User Registration Flow
 
 ```
-User → Register Page → Form Validation → User Created → Redirect to Login
+User → Register Page → Form Validation → User Created → Redirect to Home
 ```
 
 ### 2️⃣ User Login Flow
