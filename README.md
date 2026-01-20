@@ -148,12 +148,13 @@ User → Logout → Session Destroyed → Redirect to Home
 
 ---
 
-## ⚙️ How to Run the Project
+### ⚙️ How to Run the Project
 
 ### 1️⃣ Clone or Extract Project
 ```bash
 git clone <repository-url>
 cd E-Kart/Shopnow
+
 ````
 
 ### 2️⃣ Activate Virtual Environment
@@ -227,6 +228,3 @@ Python | Django | Backend Developer
 
 ---
 
-## ⭐ Conclusion
-
-Shopnow (E‑Kart) demonstrates a real‑world e‑commerce workflow using Django with clean structure, authentication, and scalable design. It is a strong foundation for advanced features like APIs, analytics, and cloud deployment.
