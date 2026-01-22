@@ -87,8 +87,12 @@ def register_user(request):
         user = User.objects.create_user(username=email,password=password1)
         user.save()
 
-        messages.success(request,'User is registered successfully..! Please Login..')
-        return redirect('login',)
+        # Auto Login after successful registration
+        user = authenticate(request, username=email, password=password1)
+        login(request, user)
+
+        messages.success(request, 'Welcome! Your account has been created.')
+        return redirect('/')
     
     return render(request, 'register.html')
 
