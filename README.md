@@ -224,7 +224,7 @@ Admin can:
 ## 👨‍💻 Author
 
 **Sairaj Jadhav**
-Python | Django | Backend Developer
+
 
 ---
 
