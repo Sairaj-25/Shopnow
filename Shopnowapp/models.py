@@ -39,7 +39,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='categories')  # on_delete=models.PROTECT
     price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='Price')
     no_of_units = models.IntegerField(default=1)
-    unit = models.CharField(max_length=50, verbose_name='product unit', default='piece', null=True)
+    unit = models.CharField(max_length=50, choices=UNIT_CHOICES, verbose_name='product unit', default='piece', null=True)
     stock_quantity = models.PositiveIntegerField(default=0, verbose_name='Stock Quantity')
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
     image = models.ImageField(upload_to='images/',verbose_name='Product Image')

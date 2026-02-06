@@ -35,12 +35,18 @@ urlpatterns = [
     path('about',views.about, name='about'),
 
     path('contact',views.contact,name='contact'),
+
+    path('policy', views.policy, name='policy'),
+
+    path('feedback', views.feedback, name='feedback'),
+
+
+    # For Cart.html
     
     path("add_to_cart/", views.add_to_cart, name="add_to_cart"),
     
     path("update_cart/", views.update_cart, name="update_cart"),
 
-    # For Cart.html
     path('update_quantity/<int:product_id>/<str:action>/', views.update_quantity, name='update_quantity'),
 
     #storing customer data

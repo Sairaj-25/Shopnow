@@ -52,14 +52,18 @@
                             <li><a class="dropdown-item text-dark" href="/catfilter/3">Dairy Products</a></li>
                             <li><a class="dropdown-item text-dark" href="/catfilter/4">Groceries</a></li>
                             <li><a class="dropdown-item text-dark" href="/catfilter/5">Snacks</a></li>
+                            <li><a class="dropdown-item text-dark" href="/catfilter/7">Skin Care</a></li>
                         </ul>
                     </li>
                 </ul>
 
                 <!-- Center Search Form -->
                 <form class="d-flex w-100 px-lg-3 mb-lg-0" action="{% url 'searchfilter' %}" method="GET">
-                    <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <div class="input-group">
+                        <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                        
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </div>
                 </form>
 
                 <!-- Right Navigation Links -->

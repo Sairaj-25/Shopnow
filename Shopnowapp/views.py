@@ -257,6 +257,18 @@ def about(request):
 def contact(request):
     return render(request, 'Contact.html')
 
+def policy(request):
+    return render(request, 'Policy.html')
+
+# later: save to DB or send email
+def feedback(request):
+    if request.method == "POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        rating = request.POST.get("rating")
+        message = request.POST.get("message")
+    return render(request, 'Feedback.html')
+
 
 @csrf_exempt  # CSRF handled in frontend
 @login_required
