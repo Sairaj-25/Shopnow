@@ -18,5 +18,5 @@ Including another URLconf
 from django.urls import path,include
 
 urlpatterns = [
-    path('',include('Shopnowapp.urls'))
+    path('',include('apps.shop.urls'))
 ]

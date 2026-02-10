@@ -1,5 +1,8 @@
 from django.db import models
 
+from django.utils.text import slugify
+from django.utils import timezone
+
 from django.contrib.auth.models import User
 
 from django.core.validators import RegexValidator
@@ -9,23 +12,30 @@ pincode_validator = RegexValidator(regex=r'^\d{6}$', message="Pin Code must be 6
 # Create your models here.
 
 class Category(models.Model):
-    CATEGORY_CHOICES = [
-        ('fruits','Fruits'),
-        ('vegetables','Vegetables'),
-        ('dairy_products','Dairy Products'),
-        ('groceries','Groceries'),
-        ('snacks','Snacks'),
-        ('medical','medical'),
-    ]
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True)
 
-    # name = models.CharField(max_length=100, unique = True, choices = CATEGORY_CHOICES, verbose_name="Category Name")
+    parent = models.ForeignKey(
+        'self',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='children'
+    )
 
-    name = models.CharField(max_length=100, unique = True, verbose_name="Category Name")
+    is_active = models.BooleanField(default=True)
+    sort_order = models.PositiveIntegerField(default=0)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['sort_order', 'name']
+
     def __str__(self):
         return self.name
 
 
-# products
 class Product(models.Model):
     UNIT_CHOICES = [
         ('kg', 'Kilogram'),
@@ -36,21 +46,55 @@ class Product(models.Model):
     ]
 
     name = models.CharField(max_length=200, verbose_name='Product Name')
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name='categories')  # on_delete=models.PROTECT
-    price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='Price')
-    no_of_units = models.IntegerField(default=1)
-    unit = models.CharField(max_length=50, choices=UNIT_CHOICES, verbose_name='product unit', default='piece', null=True)
+    slug = models.SlugField(max_length=255, unique=True, blank=True, verbose_name='Slug')
+    category = models.ForeignKey(
+        'Category', 
+        on_delete=models.PROTECT, 
+        related_name='products',
+        verbose_name='Category'
+    )
+    price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Price')
+    no_of_units = models.PositiveIntegerField(default=1, verbose_name='Number of Units')
+    unit = models.CharField(
+        max_length=50, 
+        choices=UNIT_CHOICES, 
+        verbose_name='Unit', 
+        default='piece'
+    )
     stock_quantity = models.PositiveIntegerField(default=0, verbose_name='Stock Quantity')
     is_active = models.BooleanField(default=True, verbose_name='Is Active')
-    image = models.ImageField(upload_to='images/',verbose_name='Product Image')
-    description = models.TextField(blank=True,null=True, verbose_name='Description')
-    created_at = models.DateTimeField(auto_now=True,verbose_name='Created Time')
-    updated_at = models.DateTimeField(auto_now=True, blank=True, null= True)
+    image = models.ImageField(
+        upload_to='media/images/', 
+        verbose_name='Product Image', 
+        blank=True, 
+        null=True
+    )
+    description = models.TextField(blank=True, null=True, verbose_name='Description')
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created At')
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated At')
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Product'
+        verbose_name_plural = 'Products'
+
+    def save(self, *args, **kwargs):
+        # Auto-generate slug from name if not provided
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            num = 1
+            # Ensure unique slug
+            while Product.objects.filter(slug=slug).exists():
+                slug = f"{base_slug}-{num}"
+                num += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
 
     @property
     def is_in_stock(self):
-        return self.stock_quantity and self.stock_quantity > 0
-    
+        return self.stock_quantity > 0
+
     def __str__(self):
         return self.name
     

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from Shopnowapp.models import *
+from .models import *
 
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
