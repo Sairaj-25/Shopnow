@@ -65,10 +65,7 @@ This project is designed as a **learning + production‑ready mini e‑commerce 
 
 ---
 
-## 📁 Project Structure
-
-```
-# 📁 Shopnow Project Structure
+# 📁 Project Structure
 
 ```
 Shopnow/
@@ -79,40 +76,42 @@ Shopnow/
 │       ├── admin.py
 │       ├── apps.py
 │       ├── forms.py
+│       ├── models.py
+│       ├── urls.py
+│       ├── views.py
+│       │
 │       ├── migrations/
 │       │   └── __init__.py
-│       ├── models.py
-│       ├── templatetags/
-│       │   └── custom_tags.py
-│       ├── urls.py
-│       └── views.py
+│       │
+│       └── templatetags/
+│           └── custom_tags.py
 │
 ├── config/
-│   ├── settings     # Django settings
-│   │      ├── __init__.py
-│   │      ├── base.py
-│   │      ├── dev.py
-│   │      └── prod.py
-│   │
 │   ├── __init__.py
-│   ├── urls.py          # Project routing
-│   └── wsgi.py          # WSGI entrypoint
+│   ├── urls.py              # Project routing
+│   ├── wsgi.py              # WSGI entrypoint
+│   │
+│   └── settings/            # Django settings module
+│       ├── __init__.py
+│       ├── base.py
+│       ├── dev.py
+│       └── prod.py
 │
 ├── media/
-│      ├── images
-│      └── media/
-│             └── images
-│ 
-├── static/              # Static assets (CSS, JS, images)
+│   ├── images/
+│   └── media/
+│       └── images/
 │
-├── template/            # Global HTML templates
+├── static/                  # Static assets (CSS, JS, images)
+│
+├── template/                # Global HTML templates
 │
 ├── .gitignore
 ├── README.md
-├── manage.py            # Django project launcher
-└── requirements.txt     # Dependencies list
+├── manage.py                # Django project launcher
+└── requirements.txt         # Dependencies list
+```
 
----
 
 ## 🔁 Project Flow (Step‑by‑Step)
 
