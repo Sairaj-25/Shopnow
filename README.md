@@ -68,25 +68,51 @@ This project is designed as a **learning + production‑ready mini e‑commerce 
 ## 📁 Project Structure
 
 ```
-E-Kart/
-│── env/                     # Virtual environment
-│── Shopnow/
-│   │── manage.py
-│   │── db.sqlite3
-│   │── Shopnow/             # Project settings
-│   │   ├── settings.py
-│   │   ├── urls.py
-│   │   └── wsgi.py
+# 📁 Shopnow Project Structure
+
+```
+Shopnow/
+│
+├── apps/
+│   └── shop/
+│       ├── __init__.py
+│       ├── admin.py
+│       ├── apps.py
+│       ├── forms.py
+│       ├── migrations/
+│       │   └── __init__.py
+│       ├── models.py
+│       ├── templatetags/
+│       │   └── custom_tags.py
+│       ├── urls.py
+│       └── views.py
+│
+├── config/
+│   ├── settings     # Django settings
+│   │      ├── __init__.py
+│   │      ├── base.py
+│   │      ├── dev.py
+│   │      └── prod.py
 │   │
-│   │── Shopnowapp/          # Main application
-│   │   ├── models.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── admin.py
-│   │
-│   │── templates/           # HTML templates
-│   │── static/              # CSS, JS, Images
-│   │── media/               # Product images
+│   ├── __init__.py
+│   ├── urls.py          # Project routing
+│   └── wsgi.py          # WSGI entrypoint
+│
+├── media/
+│      ├── images
+│      └── media/
+│             └── images
+│ 
+├── static/              # Static assets (CSS, JS, images)
+│
+├── template/            # Global HTML templates
+│
+├── .gitignore
+├── README.md
+├── manage.py            # Django project launcher
+└── requirements.txt     # Dependencies list
+```
+
 ```
 
 ---
