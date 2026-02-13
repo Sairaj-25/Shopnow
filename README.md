@@ -111,9 +111,6 @@ Shopnow/
 ├── README.md
 ├── manage.py            # Django project launcher
 └── requirements.txt     # Dependencies list
-```
-
-```
 
 ---
 
