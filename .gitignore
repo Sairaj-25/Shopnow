@@ -15,7 +15,6 @@ venv/
 # Django
 db.sqlite3
 *.log
-media/
 staticfiles/
 
 # IDE
